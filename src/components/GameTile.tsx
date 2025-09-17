@@ -8,28 +8,28 @@ interface GameTileProps {
 }
 
 export const GameTile = ({ letter, status, delay = 0 }: GameTileProps) => {
+  const [revealedStatus, setRevealedStatus] = useState<'empty' | 'correct' | 'present' | 'absent'>('empty');
   const [shouldAnimate, setShouldAnimate] = useState(false);
-  const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {
     if (status !== 'empty' && letter) {
-      // For answered tiles, delay the reveal
-      setShowContent(false);
+      // Start with empty background, then reveal status after delay
+      setRevealedStatus('empty');
       setShouldAnimate(false);
       const timer = setTimeout(() => {
-        setShowContent(true);
+        setRevealedStatus(status);
         setShouldAnimate(true);
       }, delay);
       return () => clearTimeout(timer);
     } else {
-      // For typing or empty tiles, show immediately
-      setShowContent(true);
+      // For typing or empty tiles, show current status immediately
+      setRevealedStatus(status);
       setShouldAnimate(false);
     }
   }, [status, letter, delay]);
 
   const getStatusStyles = () => {
-    switch (status) {
+    switch (revealedStatus) {
       case 'correct':
         return 'bg-correct text-correct-foreground border-correct';
       case 'present':
@@ -46,12 +46,12 @@ export const GameTile = ({ letter, status, delay = 0 }: GameTileProps) => {
       className={cn(
         'w-14 h-14 border-2 rounded-md flex items-center justify-center text-2xl font-bold transition-all duration-300',
         getStatusStyles(),
-        shouldAnimate && status !== 'empty' && 'tile-flip',
-        letter && status === 'empty' && 'tile-bounce',
+        shouldAnimate && revealedStatus !== 'empty' && 'tile-flip',
+        letter && revealedStatus === 'empty' && status === 'empty' && 'tile-bounce',
         'shadow-sm hover:shadow-md'
       )}
     >
-      {showContent ? letter : ''}
+      {letter}
     </div>
   );
 };

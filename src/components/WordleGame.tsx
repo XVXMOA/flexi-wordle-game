@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Settings, RotateCcw, Trophy, Target } from 'lucide-react';
+import { Settings, RotateCcw, Trophy, Target, Eye, Lightbulb } from 'lucide-react';
 import { GameTile } from './GameTile';
 import { GameKeyboard } from './GameKeyboard';
 import { GameSettings } from './GameSettings';
@@ -26,7 +26,9 @@ export const WordleGame = () => {
     stats,
     makeGuess,
     resetGame,
-    updateCurrentGuess
+    updateCurrentGuess,
+    skipWord,
+    getHint
   } = useWordle(settings);
 
   const handleKeyPress = useCallback((key: string) => {
@@ -77,13 +79,33 @@ export const WordleGame = () => {
               variant="outline"
               size="icon"
               onClick={() => setShowSettings(true)}
+              title="Settings"
             >
               <Settings className="w-5 h-5" />
             </Button>
             <Button
               variant="outline"
               size="icon"
+              onClick={getHint}
+              disabled={gameState !== 'playing'}
+              title="Get a hint"
+            >
+              <Lightbulb className="w-5 h-5" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={skipWord}
+              disabled={gameState !== 'playing'}
+              title="Skip this word"
+            >
+              <Eye className="w-5 h-5" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
               onClick={handleNewGame}
+              title="New game"
             >
               <RotateCcw className="w-5 h-5" />
             </Button>

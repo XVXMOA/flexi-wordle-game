@@ -173,6 +173,65 @@ export const useWordle = (settings: GameSettings) => {
     }
   }, [currentGuess, targetWord, currentRow, settings, usedLetters, stats, toast]);
 
+  // Skip current word (reveal answer)
+  const skipWord = useCallback(() => {
+    if (gameState !== 'playing') return;
+    
+    setGameState('lost');
+    const newStats = {
+      ...stats,
+      played: stats.played + 1,
+      currentStreak: 0,
+    };
+    setStats(newStats);
+    localStorage.setItem('wordle-stats', JSON.stringify(newStats));
+    
+    toast({
+      title: "Word Skipped",
+      description: `The word was ${targetWord}`,
+    });
+  }, [gameState, stats, targetWord, toast]);
+
+  // Get a hint (reveal one correct letter)
+  const getHint = useCallback(() => {
+    if (gameState !== 'playing' || currentRow >= settings.maxGuesses) return;
+    
+    // Find a letter that hasn't been guessed correctly yet
+    const targetLetters = targetWord.split('');
+    const revealedPositions = new Set<number>();
+    
+    // Check what's already been revealed correctly
+    guesses.forEach(guess => {
+      guess.forEach((tile, index) => {
+        if (tile.status === 'correct') {
+          revealedPositions.add(index);
+        }
+      });
+    });
+    
+    // Find an unrevealed position
+    const unrevealedPositions = targetLetters
+      .map((_, index) => index)
+      .filter(index => !revealedPositions.has(index));
+    
+    if (unrevealedPositions.length === 0) {
+      toast({
+        title: "No hints available",
+        description: "All letters have been revealed!",
+      });
+      return;
+    }
+    
+    // Pick a random unrevealed position
+    const hintPosition = unrevealedPositions[Math.floor(Math.random() * unrevealedPositions.length)];
+    const hintLetter = targetLetters[hintPosition];
+    
+    toast({
+      title: "Hint!",
+      description: `Position ${hintPosition + 1}: "${hintLetter}"`,
+    });
+  }, [gameState, currentRow, settings.maxGuesses, targetWord, guesses, toast]);
+
   // Initialize game on mount or settings change
   useEffect(() => {
     initializeGame();
@@ -190,5 +249,7 @@ export const useWordle = (settings: GameSettings) => {
     makeGuess,
     resetGame,
     updateCurrentGuess,
+    skipWord,
+    getHint,
   };
 };
