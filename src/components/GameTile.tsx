@@ -9,13 +9,22 @@ interface GameTileProps {
 
 export const GameTile = ({ letter, status, delay = 0 }: GameTileProps) => {
   const [shouldAnimate, setShouldAnimate] = useState(false);
+  const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {
     if (status !== 'empty' && letter) {
+      // For answered tiles, delay the reveal
+      setShowContent(false);
+      setShouldAnimate(false);
       const timer = setTimeout(() => {
+        setShowContent(true);
         setShouldAnimate(true);
       }, delay);
       return () => clearTimeout(timer);
+    } else {
+      // For typing or empty tiles, show immediately
+      setShowContent(true);
+      setShouldAnimate(false);
     }
   }, [status, letter, delay]);
 
@@ -42,7 +51,7 @@ export const GameTile = ({ letter, status, delay = 0 }: GameTileProps) => {
         'shadow-sm hover:shadow-md'
       )}
     >
-      {letter}
+      {showContent ? letter : ''}
     </div>
   );
 };
