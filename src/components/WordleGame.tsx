@@ -136,7 +136,7 @@ export const WordleGame = () => {
                       key={`${rowIndex}-${colIndex}`}
                       letter={letter}
                       status={tile?.status || 'empty'}
-                      delay={colIndex * 100}
+                      delay={colIndex * 250}
                     />
                   );
                 })}
