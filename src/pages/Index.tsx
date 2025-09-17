@@ -1,7 +1,7 @@
-import { WordleGame } from '@/components/WordleGame';
+import { GameLayout } from '@/components/GameLayout';
 
 const Index = () => {
-  return <WordleGame />;
+  return <GameLayout />;
 };
 
 export default Index;

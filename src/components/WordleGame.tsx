@@ -4,17 +4,24 @@ import { Card } from '@/components/ui/card';
 import { Settings, RotateCcw, Trophy, Target, Eye, Lightbulb, ArrowRight } from 'lucide-react';
 import { GameTile } from './GameTile';
 import { GameKeyboard } from './GameKeyboard';
-import { GameSettings } from './GameSettings';
 import { useWordle } from '@/hooks/useWordle';
 import { cn } from '@/lib/utils';
 
-export const WordleGame = () => {
-  const [showSettings, setShowSettings] = useState(false);
-  const [settings, setSettings] = useState({
-    wordLength: 5,
-    maxGuesses: 6,
-    difficulty: 'medium' as 'easy' | 'medium' | 'hard'
-  });
+interface WordleGameProps {
+  settings: {
+    wordLength: number;
+    maxGuesses: number;
+    difficulty: 'easy' | 'medium' | 'hard';
+  };
+}
+
+export const WordleGame = ({ settings }: WordleGameProps) => {
+  const [localSettings, setLocalSettings] = useState(settings);
+
+  // Update local settings when parent settings change
+  useEffect(() => {
+    setLocalSettings(settings);
+  }, [settings]);
 
   const {
     currentGuess,
@@ -29,7 +36,11 @@ export const WordleGame = () => {
     updateCurrentGuess,
     skipWord,
     getHint
-  } = useWordle(settings);
+  } = useWordle(localSettings);
+
+  const handleNewGame = useCallback(() => {
+    resetGame();
+  }, [resetGame]);
 
   const handleKeyPress = useCallback((key: string) => {
     if (gameState === 'playing') {
@@ -38,7 +49,7 @@ export const WordleGame = () => {
       } else if (key === 'BACKSPACE') {
         updateCurrentGuess(prev => prev.slice(0, -1));
       } else if (key.length === 1 && key.match(/[A-Z]/)) {
-        if (currentGuess.length < settings.wordLength) {
+        if (currentGuess.length < localSettings.wordLength) {
           updateCurrentGuess(prev => prev + key);
         }
       }
@@ -46,7 +57,7 @@ export const WordleGame = () => {
       // Space key to go to next word
       handleNewGame();
     }
-  }, [gameState, currentGuess.length, settings.wordLength, makeGuess, updateCurrentGuess]);
+  }, [gameState, currentGuess.length, localSettings.wordLength, makeGuess, updateCurrentGuess, handleNewGame]);
 
   useEffect(() => {
     const handlePhysicalKeyPress = (e: KeyboardEvent) => {
@@ -58,16 +69,6 @@ export const WordleGame = () => {
     return () => window.removeEventListener('keydown', handlePhysicalKeyPress);
   }, [handleKeyPress]);
 
-  const handleNewGame = () => {
-    resetGame();
-  };
-
-  const handleSettingsChange = (newSettings: typeof settings) => {
-    setSettings(newSettings);
-    setShowSettings(false);
-    resetGame();
-  };
-
   return (
     <div className="min-h-screen bg-background p-4">
       <div className="max-w-lg mx-auto">
@@ -78,14 +79,6 @@ export const WordleGame = () => {
             <h1 className="text-3xl font-bold text-foreground">Wordle+</h1>
           </div>
           <div className="flex space-x-2">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => setShowSettings(true)}
-              title="Settings"
-            >
-              <Settings className="w-5 h-5" />
-            </Button>
             <Button
               variant="outline"
               size="icon"
@@ -136,9 +129,9 @@ export const WordleGame = () => {
         {/* Game Grid */}
         <Card className="p-4 mb-6">
           <div className="grid gap-2 justify-center" style={{
-            gridTemplateRows: `repeat(${settings.maxGuesses}, 1fr)`,
+            gridTemplateRows: `repeat(${localSettings.maxGuesses}, 1fr)`,
           }}>
-            {Array.from({ length: settings.maxGuesses }).map((_, rowIndex) => (
+            {Array.from({ length: localSettings.maxGuesses }).map((_, rowIndex) => (
               <div
                 key={rowIndex}
                 className={cn(
@@ -146,10 +139,10 @@ export const WordleGame = () => {
                   rowIndex === currentRow && gameState === 'playing' && guesses[rowIndex]?.some(tile => !tile.letter) && "shake"
                 )}
                 style={{
-                  gridTemplateColumns: `repeat(${settings.wordLength}, 1fr)`,
+                  gridTemplateColumns: `repeat(${localSettings.wordLength}, 1fr)`,
                 }}
               >
-                {Array.from({ length: settings.wordLength }).map((_, colIndex) => {
+                {Array.from({ length: localSettings.wordLength }).map((_, colIndex) => {
                   const tile = guesses[rowIndex]?.[colIndex];
                   const isCurrentRow = rowIndex === currentRow;
                   const letter = isCurrentRow && !tile?.letter 
@@ -221,13 +214,7 @@ export const WordleGame = () => {
           disabled={gameState !== 'playing'}
         />
 
-        {/* Settings Modal */}
-        <GameSettings
-          open={showSettings}
-          onOpenChange={setShowSettings}
-          settings={settings}
-          onSettingsChange={handleSettingsChange}
-        />
+        {/* Settings Modal - Remove this section */}
       </div>
     </div>
   );
