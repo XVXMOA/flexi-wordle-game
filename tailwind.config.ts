@@ -19,6 +19,25 @@ export default {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        
+        // Game-specific colors
+        correct: {
+          DEFAULT: "hsl(var(--correct))",
+          foreground: "hsl(var(--correct-foreground))",
+        },
+        present: {
+          DEFAULT: "hsl(var(--present))",
+          foreground: "hsl(var(--present-foreground))",
+        },
+        absent: {
+          DEFAULT: "hsl(var(--absent))",
+          foreground: "hsl(var(--absent-foreground))",
+        },
+        empty: {
+          DEFAULT: "hsl(var(--empty))",
+          foreground: "hsl(var(--empty-foreground))",
+        },
+        
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",

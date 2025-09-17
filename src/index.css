@@ -2,14 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+/* Wordle Game Design System - All colors, gradients, fonts, etc defined here. 
 All colors MUST be HSL.
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 210 20% 98%;
+    --foreground: 213 27% 20%;
+    
+    /* Game-specific colors */
+    --correct: 134 61% 41%;
+    --correct-foreground: 0 0% 100%;
+    --present: 45 93% 47%;
+    --present-foreground: 0 0% 100%;
+    --absent: 220 14% 66%;
+    --absent-foreground: 0 0% 100%;
+    --empty: 210 14% 89%;
+    --empty-foreground: 213 27% 20%;
+    --game-border: 220 13% 91%;
+    
+    /* UI enhancements */
+    --tile-shadow: 220 13% 91%;
+    --success-glow: 134 61% 41%;
+    --warning-glow: 45 93% 47%;
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -56,8 +72,24 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 213 27% 10%;
+    --foreground: 210 20% 98%;
+    
+    /* Game-specific colors for dark mode */
+    --correct: 134 61% 41%;
+    --correct-foreground: 0 0% 100%;
+    --present: 45 93% 47%;
+    --present-foreground: 0 0% 100%;
+    --absent: 220 14% 36%;
+    --absent-foreground: 0 0% 100%;
+    --empty: 213 27% 18%;
+    --empty-foreground: 210 20% 98%;
+    --game-border: 220 13% 25%;
+    
+    /* UI enhancements for dark */
+    --tile-shadow: 220 13% 15%;
+    --success-glow: 134 61% 41%;
+    --warning-glow: 45 93% 47%;
 
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
@@ -102,4 +134,37 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Game-specific animations and utilities */
+@layer components {
+  .tile-flip {
+    animation: flip 0.6s ease-in-out;
+  }
+  
+  .tile-bounce {
+    animation: bounce-in 0.1s ease-in-out;
+  }
+  
+  .shake {
+    animation: shake 0.5s ease-in-out;
+  }
+}
+
+@keyframes flip {
+  0% { transform: rotateX(0); }
+  50% { transform: rotateX(-90deg); }
+  100% { transform: rotateX(0); }
+}
+
+@keyframes bounce-in {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+  20%, 40%, 60%, 80% { transform: translateX(2px); }
 }
