@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Settings, RotateCcw, Trophy, Target, Eye, Lightbulb } from 'lucide-react';
+import { Settings, RotateCcw, Trophy, Target, Eye, Lightbulb, ArrowRight } from 'lucide-react';
 import { GameTile } from './GameTile';
 import { GameKeyboard } from './GameKeyboard';
 import { GameSettings } from './GameSettings';
@@ -32,16 +32,19 @@ export const WordleGame = () => {
   } = useWordle(settings);
 
   const handleKeyPress = useCallback((key: string) => {
-    if (gameState !== 'playing') return;
-
-    if (key === 'ENTER') {
-      makeGuess();
-    } else if (key === 'BACKSPACE') {
-      updateCurrentGuess(prev => prev.slice(0, -1));
-    } else if (key.length === 1 && key.match(/[A-Z]/)) {
-      if (currentGuess.length < settings.wordLength) {
-        updateCurrentGuess(prev => prev + key);
+    if (gameState === 'playing') {
+      if (key === 'ENTER') {
+        makeGuess();
+      } else if (key === 'BACKSPACE') {
+        updateCurrentGuess(prev => prev.slice(0, -1));
+      } else if (key.length === 1 && key.match(/[A-Z]/)) {
+        if (currentGuess.length < settings.wordLength) {
+          updateCurrentGuess(prev => prev + key);
+        }
       }
+    } else if ((gameState === 'won' || gameState === 'lost') && key === ' ') {
+      // Space key to go to next word
+      handleNewGame();
     }
   }, [gameState, currentGuess.length, settings.wordLength, makeGuess, updateCurrentGuess]);
 
@@ -173,8 +176,18 @@ export const WordleGame = () => {
             <div className="text-center">
               <Trophy className="w-8 h-8 text-correct mx-auto mb-2" />
               <p className="text-lg font-semibold text-correct">Congratulations!</p>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-muted-foreground mb-4">
                 You guessed it in {currentRow + 1} tries!
+              </p>
+              <Button 
+                onClick={handleNewGame}
+                className="bg-correct hover:bg-correct/90 text-correct-foreground"
+              >
+                <ArrowRight className="w-4 h-4 mr-2" />
+                Next Word
+              </Button>
+              <p className="text-xs text-muted-foreground mt-2">
+                or press <kbd className="px-1 bg-muted rounded text-xs">Space</kbd>
               </p>
             </div>
           </Card>
@@ -183,9 +196,19 @@ export const WordleGame = () => {
         {gameState === 'lost' && (
           <Card className="p-4 mb-6 bg-destructive/10 border-destructive">
             <div className="text-center">
-              <p className="text-lg font-semibold text-destructive">Game Over!</p>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-lg font-semibold text-destructive mb-2">Game Over!</p>
+              <p className="text-sm text-muted-foreground mb-4">
                 The word was: <span className="font-bold text-foreground">{targetWord}</span>
+              </p>
+              <Button 
+                onClick={handleNewGame}
+                variant="destructive"
+              >
+                <ArrowRight className="w-4 h-4 mr-2" />
+                Next Word
+              </Button>
+              <p className="text-xs text-muted-foreground mt-2">
+                or press <kbd className="px-1 bg-muted rounded text-xs">Space</kbd>
               </p>
             </div>
           </Card>
