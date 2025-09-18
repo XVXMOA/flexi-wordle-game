@@ -23,13 +23,13 @@ export const GameKeyboard = ({ onKeyPress, usedLetters, disabled }: GameKeyboard
     const status = getKeyStatus(key);
     switch (status) {
       case 'correct':
-        return 'bg-correct text-correct-foreground hover:bg-correct/90';
+        return 'bg-correct text-correct-foreground hover:bg-correct/95';
       case 'present':
-        return 'bg-present text-present-foreground hover:bg-present/90';
+        return 'bg-present text-present-foreground hover:bg-present/95';
       case 'absent':
-        return 'bg-absent text-absent-foreground hover:bg-absent/90';
+        return 'bg-absent text-absent-foreground hover:bg-absent/95';
       default:
-        return 'bg-muted text-muted-foreground hover:bg-muted/80';
+        return 'bg-secondary text-foreground hover:bg-secondary';
     }
   };
 
@@ -40,12 +40,12 @@ export const GameKeyboard = ({ onKeyPress, usedLetters, disabled }: GameKeyboard
           {row.map((key) => (
             <Button
               key={key}
-              variant="outline"
+              variant="secondary"
               size="sm"
               disabled={disabled}
               onClick={() => onKeyPress(key)}
               className={cn(
-                'font-semibold transition-all duration-200',
+                'font-medium transition-colors duration-150',
                 key === 'ENTER' || key === 'BACKSPACE' ? 'px-4' : 'px-3 py-2 min-w-[2.5rem]',
                 getKeyStyles(key)
               )}

@@ -12,6 +12,7 @@ interface GameStats {
   won: number;
   currentStreak: number;
   maxStreak: number;
+  guessDistribution?: Record<number, number>;
 }
 
 interface GameSettings {
@@ -31,7 +32,7 @@ export const useWordle = (settings: GameSettings) => {
   const [usedLetters, setUsedLetters] = useState<Record<string, 'correct' | 'present' | 'absent'>>({});
   const [stats, setStats] = useState<GameStats>(() => {
     const saved = localStorage.getItem('wordle-stats');
-    return saved ? JSON.parse(saved) : { played: 0, won: 0, currentStreak: 0, maxStreak: 0 };
+    return saved ? JSON.parse(saved) : { played: 0, won: 0, currentStreak: 0, maxStreak: 0, guessDistribution: {} };
   });
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
@@ -141,12 +142,17 @@ export const useWordle = (settings: GameSettings) => {
     // Check win condition
     if (currentGuess === targetWord) {
       setGameState('won');
+      const guessCount = currentRow + 1;
       const newStats = {
         ...stats,
         played: stats.played + 1,
         won: stats.won + 1,
         currentStreak: stats.currentStreak + 1,
         maxStreak: Math.max(stats.maxStreak, stats.currentStreak + 1),
+        guessDistribution: {
+          ...stats.guessDistribution,
+          [guessCount]: (stats.guessDistribution?.[guessCount] || 0) + 1
+        }
       };
       setStats(newStats);
       localStorage.setItem('wordle-stats', JSON.stringify(newStats));

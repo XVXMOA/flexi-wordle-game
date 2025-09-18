@@ -6,6 +6,7 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
   useSidebar,
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -43,28 +44,18 @@ export const GameSidebar = ({ settings, onSettingsChange }: GameSidebarProps) =>
   };
 
   return (
-    <Sidebar className="w-80 border-r">
-      <SidebarHeader className="p-6 border-b">
-        <div className="flex items-center space-x-3">
-          <div className="p-2 bg-primary/10 rounded-lg">
-            <Target className="w-6 h-6 text-primary" />
-          </div>
-          <div>
-            <h2 className="font-bold text-lg">Wordle+ Settings</h2>
-            <p className="text-sm text-muted-foreground">Customize your game</p>
-          </div>
-        </div>
+    <Sidebar className="border-r">
+      <SidebarHeader className="p-4 border-b flex items-center justify-between">
+        <h2 className="font-semibold">Settings</h2>
+        <SidebarTrigger className="h-7 w-7" />
       </SidebarHeader>
 
-      <SidebarContent className="p-6">
+      <SidebarContent className="p-4">
         <SidebarGroup>
-          <SidebarGroupLabel className="flex items-center space-x-2 mb-4">
-            <Settings className="w-4 h-4" />
-            <span>Game Configuration</span>
-          </SidebarGroupLabel>
+          <SidebarGroupLabel className="mb-2">Game</SidebarGroupLabel>
           
           <SidebarGroupContent className="space-y-6">
-            <div className="space-y-3">
+            <div className="space-y-2">
               <Label htmlFor="word-length" className="text-sm font-medium">
                 Word Length
               </Label>
@@ -85,12 +76,10 @@ export const GameSidebar = ({ settings, onSettingsChange }: GameSidebarProps) =>
                   ))}
                 </SelectContent>
               </Select>
-              <p className="text-xs text-muted-foreground">
-                Choose how many letters each word contains
-              </p>
+              <p className="text-xs text-muted-foreground">Letters per word</p>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-2">
               <Label htmlFor="max-guesses" className="text-sm font-medium">
                 Number of Guesses
               </Label>
@@ -111,12 +100,10 @@ export const GameSidebar = ({ settings, onSettingsChange }: GameSidebarProps) =>
                   ))}
                 </SelectContent>
               </Select>
-              <p className="text-xs text-muted-foreground">
-                How many attempts you get to solve each word
-              </p>
+              <p className="text-xs text-muted-foreground">Attempts allowed</p>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-2">
               <Label htmlFor="difficulty" className="text-sm font-medium">
                 Difficulty Level
               </Label>
@@ -130,47 +117,17 @@ export const GameSidebar = ({ settings, onSettingsChange }: GameSidebarProps) =>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="easy">
-                    <div className="flex flex-col items-start">
-                      <span>Easy</span>
-                      <span className="text-xs text-muted-foreground">Common words</span>
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="medium">
-                    <div className="flex flex-col items-start">
-                      <span>Medium</span>
-                      <span className="text-xs text-muted-foreground">Mixed difficulty</span>
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="hard">
-                    <div className="flex flex-col items-start">
-                      <span>Hard</span>
-                      <span className="text-xs text-muted-foreground">Challenging words</span>
-                    </div>
-                  </SelectItem>
+                  <SelectItem value="easy">Easy</SelectItem>
+                  <SelectItem value="medium">Medium</SelectItem>
+                  <SelectItem value="hard">Hard</SelectItem>
                 </SelectContent>
               </Select>
-              <p className="text-xs text-muted-foreground">
-                Controls word complexity and rarity
-              </p>
+              <p className="text-xs text-muted-foreground">Word complexity</p>
             </div>
 
-            <div className="pt-6 space-y-3 border-t">
-              <Button 
-                onClick={handleSave} 
-                className="w-full"
-                size="lg"
-              >
-                Apply Settings
-              </Button>
-              
-              <Button 
-                variant="outline" 
-                onClick={handleReset}
-                className="w-full"
-              >
-                Reset to Default
-              </Button>
+            <div className="pt-4 space-y-2 border-t">
+              <Button onClick={handleSave} className="w-full">Apply</Button>
+              <Button variant="outline" onClick={handleReset} className="w-full">Reset</Button>
             </div>
           </SidebarGroupContent>
         </SidebarGroup>

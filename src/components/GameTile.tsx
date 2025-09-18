@@ -44,11 +44,9 @@ export const GameTile = ({ letter, status, delay = 0 }: GameTileProps) => {
   return (
     <div
       className={cn(
-        'w-14 h-14 border-2 rounded-md flex items-center justify-center text-2xl font-bold transition-all duration-300',
+        'w-14 h-14 border rounded-sm flex items-center justify-center text-2xl font-bold transition-colors duration-200',
         getStatusStyles(),
-        shouldAnimate && revealedStatus !== 'empty' && 'tile-flip',
-        letter && revealedStatus === 'empty' && status === 'empty' && 'tile-bounce',
-        'shadow-sm hover:shadow-md'
+        shouldAnimate && revealedStatus !== 'empty' && 'tile-flip'
       )}
     >
       {letter}
