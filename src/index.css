@@ -164,9 +164,29 @@ All colors MUST be HSL.
     position: relative;
     min-height: 100vh;
     overflow: hidden;
-    background: radial-gradient(130% 130% at 12% -10%, hsla(198, 93%, 60%, 0.12), transparent 60%),
-      radial-gradient(120% 120% at 88% -5%, hsla(257, 95%, 72%, 0.1), transparent 62%),
+    background:
+      radial-gradient(130% 130% at 12% -10%, hsla(198, 93%, 60%, 0.16), transparent 60%),
+      radial-gradient(120% 120% at 88% -5%, hsla(257, 95%, 72%, 0.14), transparent 62%),
       linear-gradient(180deg, hsla(210, 40%, 97%, 0.98), hsla(210, 40%, 94%, 0.92));
+  }
+
+  .liquid-shell::before,
+  .liquid-shell::after {
+    content: "";
+    position: absolute;
+    inset: -25% -15% auto;
+    height: 55%;
+    pointer-events: none;
+    transform: translateZ(0);
+    background: radial-gradient(70% 70% at 30% 30%, hsla(159, 64%, 72%, 0.3), transparent 72%);
+    opacity: 0.65;
+  }
+
+  .liquid-shell::after {
+    inset: auto -25% -30% 15%;
+    height: 65%;
+    background: radial-gradient(75% 75% at 70% 70%, hsla(199, 88%, 68%, 0.26), transparent 70%);
+    opacity: 0.5;
   }
 
   .dark .liquid-shell {
@@ -216,23 +236,23 @@ All colors MUST be HSL.
 
   @supports (backdrop-filter: blur(1px)) {
     .liquid-panel {
-      background: hsla(0, 0%, 100%, 0.4);
-      backdrop-filter: blur(10px) saturate(140%);
+      background: hsla(0, 0%, 100%, 0.35);
+      backdrop-filter: blur(14px) saturate(140%);
     }
 
     .dark .liquid-panel {
-      background: hsla(222, 47%, 9%, 0.6);
-      backdrop-filter: blur(12px) saturate(130%);
+      background: hsla(222, 47%, 9%, 0.55);
+      backdrop-filter: blur(16px) saturate(130%);
     }
 
     .liquid-panel-soft {
-      background: hsla(0, 0%, 100%, 0.36);
-      backdrop-filter: blur(9px) saturate(135%);
+      background: hsla(0, 0%, 100%, 0.32);
+      backdrop-filter: blur(12px) saturate(135%);
     }
 
     .dark .liquid-panel-soft {
-      background: hsla(220, 27%, 13%, 0.6);
-      backdrop-filter: blur(10px) saturate(125%);
+      background: hsla(220, 27%, 13%, 0.58);
+      backdrop-filter: blur(14px) saturate(125%);
     }
   }
 
