@@ -37,7 +37,7 @@ export const GameTile = ({ letter, status, delay = 0 }: GameTileProps) => {
       case 'absent':
         return 'bg-absent text-absent-foreground border-absent';
       default:
-        return 'bg-white/60 text-empty-foreground border-white/50';
+        return 'bg-empty text-empty-foreground border-gray-300';
     }
   };
 
