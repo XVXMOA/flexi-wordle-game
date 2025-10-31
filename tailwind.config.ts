@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import animate from "tailwindcss-animate";
 
 export default {
   darkMode: ["class"],
@@ -99,12 +100,81 @@ export default {
             height: "0",
           },
         },
+        "liquid-dialog-in": {
+          "0%": {
+            transform: "translate(-32%, -32%) scale(0.9)",
+            opacity: "0",
+            filter: "blur(10px) saturate(115%)",
+          },
+          "60%": {
+            transform: "translate(-47%, -47%) scale(1.02)",
+            opacity: "1",
+            filter: "blur(1.5px) saturate(103%)",
+          },
+          "100%": {
+            transform: "translate(-50%, -50%) scale(1)",
+            opacity: "1",
+            filter: "blur(0) saturate(100%)",
+          },
+        },
+        "liquid-dialog-out": {
+          "0%": {
+            transform: "translate(-50%, -50%) scale(1)",
+            opacity: "1",
+            filter: "blur(0) saturate(100%)",
+          },
+          "40%": {
+            transform: "translate(-44%, -44%) scale(0.95)",
+            filter: "blur(4px) saturate(108%)",
+          },
+          "100%": {
+            transform: "translate(12%, 16%) scale(0.82)",
+            opacity: "0",
+            filter: "blur(12px) saturate(120%)",
+          },
+        },
+        "liquid-overlay-in": {
+          "0%": {
+            opacity: "0",
+            backdropFilter: "blur(0px)",
+          },
+          "100%": {
+            opacity: "1",
+            backdropFilter: "blur(4px)",
+          },
+        },
+        "liquid-overlay-out": {
+          "0%": {
+            opacity: "1",
+            backdropFilter: "blur(4px)",
+          },
+          "100%": {
+            opacity: "0",
+            backdropFilter: "blur(0px)",
+          },
+        },
+        "liquid-orb": {
+          "0%": {
+            transform: "translate3d(-20%, -10%, 0) scale(1)",
+          },
+          "50%": {
+            transform: "translate3d(12%, 14%, 0) scale(1.2)",
+          },
+          "100%": {
+            transform: "translate3d(-18%, -6%, 0) scale(1)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "liquid-dialog-in": "liquid-dialog-in 0.55s cubic-bezier(0.22, 0.61, 0.36, 1)",
+        "liquid-dialog-out": "liquid-dialog-out 0.5s cubic-bezier(0.55, 0.03, 0.52, 0.96) forwards",
+        "liquid-overlay-in": "liquid-overlay-in 0.45s ease",
+        "liquid-overlay-out": "liquid-overlay-out 0.35s ease forwards",
+        "liquid-orb": "liquid-orb 8s ease-in-out infinite",
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [animate],
 } satisfies Config;

@@ -37,14 +37,14 @@ export const GameTile = ({ letter, status, delay = 0 }: GameTileProps) => {
       case 'absent':
         return 'bg-absent text-absent-foreground border-absent';
       default:
-        return 'bg-empty text-empty-foreground border-gray-300';
+        return 'bg-white text-empty-foreground border-slate-200 dark:bg-slate-900 dark:border-slate-800';
     }
   };
 
   return (
     <div
       className={cn(
-        'w-14 h-14 border rounded-sm flex items-center justify-center text-2xl font-bold transition-colors duration-200',
+        'w-16 h-16 border rounded-2xl flex items-center justify-center text-2xl font-semibold uppercase tracking-widest transition-all duration-200 shadow-[0_12px_32px_-28px_rgba(15,23,42,0.35)] dark:shadow-[0_12px_32px_-28px_rgba(2,6,23,0.65)]',
         getStatusStyles(),
         shouldAnimate && revealedStatus !== 'empty' && 'tile-flip'
       )}
