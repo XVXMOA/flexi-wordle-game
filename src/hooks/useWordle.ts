@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { getRandomWord, isValidWord, type WordCategory } from '@/lib/wordApi';
+import { getRandomWord, isValidWord } from '@/lib/wordApi';
 import { useToast } from '@/hooks/use-toast';
 
 interface Tile {
@@ -19,65 +19,9 @@ interface GameSettings {
   wordLength: number;
   maxGuesses: number;
   difficulty: 'easy' | 'medium' | 'hard';
-  category: WordCategory;
 }
 
 type GameState = 'playing' | 'won' | 'lost';
-
-const STATS_STORAGE_KEY = 'wordle-stats';
-
-const defaultStats: GameStats = {
-  played: 0,
-  won: 0,
-  currentStreak: 0,
-  maxStreak: 0,
-  guessDistribution: {},
-};
-
-const canUseLocalStorage = () => typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
-
-const loadStoredStats = (): GameStats => {
-  if (!canUseLocalStorage()) {
-    return defaultStats;
-  }
-
-  try {
-    const saved = window.localStorage.getItem(STATS_STORAGE_KEY);
-    if (!saved) {
-      return defaultStats;
-    }
-
-    const parsed = JSON.parse(saved) as GameStats;
-    if (!parsed || typeof parsed !== 'object') {
-      return defaultStats;
-    }
-
-    return {
-      ...defaultStats,
-      ...parsed,
-      guessDistribution: {
-        ...(defaultStats.guessDistribution ?? {}),
-        ...(parsed.guessDistribution ?? {}),
-      },
-    };
-  } catch (error) {
-    console.error('Failed to parse stored stats:', error);
-    window.localStorage.removeItem(STATS_STORAGE_KEY);
-    return defaultStats;
-  }
-};
-
-const persistStats = (stats: GameStats) => {
-  if (!canUseLocalStorage()) {
-    return;
-  }
-
-  try {
-    window.localStorage.setItem(STATS_STORAGE_KEY, JSON.stringify(stats));
-  } catch (error) {
-    console.error('Failed to persist stats:', error);
-  }
-};
 
 export const useWordle = (settings: GameSettings) => {
   const [targetWord, setTargetWord] = useState('');
@@ -86,7 +30,10 @@ export const useWordle = (settings: GameSettings) => {
   const [guesses, setGuesses] = useState<Tile[][]>([]);
   const [gameState, setGameState] = useState<GameState>('playing');
   const [usedLetters, setUsedLetters] = useState<Record<string, 'correct' | 'present' | 'absent'>>({});
-  const [stats, setStats] = useState<GameStats>(() => loadStoredStats());
+  const [stats, setStats] = useState<GameStats>(() => {
+    const saved = localStorage.getItem('wordle-stats');
+    return saved ? JSON.parse(saved) : { played: 0, won: 0, currentStreak: 0, maxStreak: 0, guessDistribution: {} };
+  });
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
@@ -98,7 +45,7 @@ export const useWordle = (settings: GameSettings) => {
   const initializeGame = useCallback(async () => {
     setIsLoading(true);
     try {
-      const word = await getRandomWord(settings.wordLength, settings.difficulty, settings.category);
+      const word = await getRandomWord(settings.wordLength, settings.difficulty);
       setTargetWord(word.toUpperCase());
       setCurrentGuess('');
       setCurrentRow(0);
@@ -119,7 +66,7 @@ export const useWordle = (settings: GameSettings) => {
         6: ['CASTLE', 'FRIEND', 'NATURE'],
         7: ['RAINBOW', 'JOURNEY', 'FLOWERS'],
         8: ['MOUNTAIN', 'SUNSHINE', 'COMPUTER']
-      } as const;
+      };
       const fallbacks = fallbackWords[settings.wordLength as keyof typeof fallbackWords] || fallbackWords[5];
       setTargetWord(fallbacks[Math.floor(Math.random() * fallbacks.length)]);
     } finally {
@@ -208,7 +155,7 @@ export const useWordle = (settings: GameSettings) => {
         }
       };
       setStats(newStats);
-      persistStats(newStats);
+      localStorage.setItem('wordle-stats', JSON.stringify(newStats));
       toast({
         title: "Congratulations!",
         description: `You guessed it in ${currentRow + 1} tries!`,
@@ -221,7 +168,7 @@ export const useWordle = (settings: GameSettings) => {
         currentStreak: 0,
       };
       setStats(newStats);
-      persistStats(newStats);
+      localStorage.setItem('wordle-stats', JSON.stringify(newStats));
       toast({
         title: "Game Over",
         description: `The word was ${targetWord}`,
@@ -243,7 +190,7 @@ export const useWordle = (settings: GameSettings) => {
       currentStreak: 0,
     };
     setStats(newStats);
-    persistStats(newStats);
+    localStorage.setItem('wordle-stats', JSON.stringify(newStats));
     
     toast({
       title: "Word Skipped",
