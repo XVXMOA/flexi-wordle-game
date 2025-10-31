@@ -23,13 +23,13 @@ export const GameKeyboard = ({ onKeyPress, usedLetters, disabled }: GameKeyboard
     const status = getKeyStatus(key);
     switch (status) {
       case 'correct':
-        return 'bg-correct text-correct-foreground hover:bg-correct/95';
+        return 'bg-gradient-to-r from-emerald-400 to-emerald-500 text-white border-none shadow-sm hover:from-emerald-400/90 hover:to-emerald-500/90';
       case 'present':
-        return 'bg-present text-present-foreground hover:bg-present/95';
+        return 'bg-gradient-to-r from-amber-300 to-amber-400 text-slate-900 border-none shadow-sm hover:from-amber-300/90 hover:to-amber-400/90';
       case 'absent':
-        return 'bg-absent text-absent-foreground hover:bg-absent/95';
+        return 'bg-slate-200 text-slate-600 border border-slate-200 hover:bg-slate-200/80 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800/80';
       default:
-        return 'bg-secondary text-foreground hover:bg-secondary';
+        return 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-700 dark:hover:bg-slate-800';
     }
   };
 
@@ -45,7 +45,7 @@ export const GameKeyboard = ({ onKeyPress, usedLetters, disabled }: GameKeyboard
               disabled={disabled}
               onClick={() => onKeyPress(key)}
               className={cn(
-                'font-medium transition-colors duration-150',
+                'font-medium transition-colors duration-150 rounded-xl shadow-[0_12px_32px_-28px_rgba(15,23,42,0.45)] dark:shadow-[0_12px_32px_-28px_rgba(2,6,23,0.65)]',
                 key === 'ENTER' || key === 'BACKSPACE' ? 'px-4' : 'px-3 py-2 min-w-[2.5rem]',
                 getKeyStyles(key)
               )}

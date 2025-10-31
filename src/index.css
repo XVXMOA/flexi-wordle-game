@@ -158,3 +158,105 @@ All colors MUST be HSL.
   10%, 30%, 50%, 70%, 90% { transform: translateX(-1px); }
   20%, 40%, 60%, 80% { transform: translateX(1px); }
 }
+
+@layer components {
+  .liquid-shell {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+    background: radial-gradient(130% 130% at 12% -10%, hsla(198, 93%, 60%, 0.12), transparent 60%),
+      radial-gradient(120% 120% at 88% -5%, hsla(257, 95%, 72%, 0.1), transparent 62%),
+      linear-gradient(180deg, hsla(210, 40%, 97%, 0.98), hsla(210, 40%, 94%, 0.92));
+  }
+
+  .dark .liquid-shell {
+    background:
+      radial-gradient(120% 140% at 12% -20%, hsla(198, 90%, 62%, 0.2), transparent 65%),
+      radial-gradient(130% 120% at 85% -5%, hsla(224, 76%, 55%, 0.2), transparent 60%),
+      linear-gradient(180deg, hsla(220, 35%, 14%, 0.96), hsla(215, 34%, 18%, 0.94));
+  }
+
+  .dark .liquid-shell::before {
+    background: radial-gradient(75% 75% at 35% 25%, hsla(159, 66%, 68%, 0.24), transparent 70%);
+    opacity: 0.55;
+  }
+
+  .dark .liquid-shell::after {
+    background: radial-gradient(70% 70% at 65% 70%, hsla(200, 90%, 64%, 0.22), transparent 68%);
+    opacity: 0.45;
+  }
+
+  .liquid-panel {
+    position: relative;
+    border-radius: 1.75rem;
+    border: 1px solid hsla(0, 0%, 100%, 0.45);
+    background: hsla(0, 0%, 100%, 0.68);
+    box-shadow: 0 20px 55px -30px rgba(15, 23, 42, 0.45);
+  }
+
+  .dark .liquid-panel {
+    border-color: hsla(0, 0%, 100%, 0.12);
+    background: hsla(222, 47%, 11%, 0.72);
+    box-shadow: 0 26px 60px -32px rgba(7, 11, 23, 0.85);
+  }
+
+  .liquid-panel-soft {
+    position: relative;
+    border-radius: 1.5rem;
+    border: 1px solid hsla(0, 0%, 100%, 0.4);
+    background: hsla(0, 0%, 100%, 0.62);
+    box-shadow: 0 18px 48px -32px rgba(15, 23, 42, 0.4);
+  }
+
+  .dark .liquid-panel-soft {
+    border-color: hsla(0, 0%, 100%, 0.12);
+    background: hsla(220, 27%, 15%, 0.76);
+    box-shadow: 0 20px 56px -32px rgba(8, 12, 26, 0.75);
+  }
+
+  @supports (backdrop-filter: blur(1px)) {
+    .liquid-panel {
+      background: hsla(0, 0%, 100%, 0.4);
+      backdrop-filter: blur(10px) saturate(140%);
+    }
+
+    .dark .liquid-panel {
+      background: hsla(222, 47%, 9%, 0.6);
+      backdrop-filter: blur(12px) saturate(130%);
+    }
+
+    .liquid-panel-soft {
+      background: hsla(0, 0%, 100%, 0.36);
+      backdrop-filter: blur(9px) saturate(135%);
+    }
+
+    .dark .liquid-panel-soft {
+      background: hsla(220, 27%, 13%, 0.6);
+      backdrop-filter: blur(10px) saturate(125%);
+    }
+  }
+
+  .glass-sidebar [data-sidebar="sidebar"] {
+    border-right: 1px solid hsla(0, 0%, 100%, 0.32);
+    background: hsla(0, 0%, 100%, 0.6);
+    box-shadow: 0 24px 50px -32px rgba(15, 23, 42, 0.4);
+  }
+
+  .dark .glass-sidebar [data-sidebar="sidebar"] {
+    border-right: 1px solid hsla(0, 0%, 100%, 0.1);
+    background: hsla(220, 32%, 16%, 0.68);
+    box-shadow: 0 26px 60px -34px rgba(5, 9, 20, 0.75);
+  }
+
+  @supports (backdrop-filter: blur(1px)) {
+    .glass-sidebar [data-sidebar="sidebar"] {
+      background: hsla(0, 0%, 100%, 0.32);
+      backdrop-filter: blur(16px) saturate(150%);
+    }
+
+    .dark .glass-sidebar [data-sidebar="sidebar"] {
+      background: hsla(220, 32%, 14%, 0.56);
+      backdrop-filter: blur(18px) saturate(135%);
+    }
+  }
+}
