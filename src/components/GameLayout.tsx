@@ -1,19 +1,22 @@
 import { SidebarProvider, SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
 import { GameSidebar } from "./GameSidebar";
 import { WordleGame } from "./WordleGame";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import type { WordCategory } from "@/lib/wordApi";
 
 interface GameSettings {
   wordLength: number;
   maxGuesses: number;
   difficulty: 'easy' | 'medium' | 'hard';
+  category: WordCategory;
 }
 
 export const GameLayout = () => {
   const [settings, setSettings] = useState<GameSettings>({
     wordLength: 5,
     maxGuesses: 6,
-    difficulty: 'medium'
+    difficulty: 'medium',
+    category: 'normal'
   });
 
   const [gameKey, setGameKey] = useState(0); // Force game reset when settings change
@@ -25,13 +28,13 @@ export const GameLayout = () => {
 
   return (
     <SidebarProvider>
-      <div className="min-h-screen flex w-full">
-        <GameSidebar 
+      <div className="relative z-10 flex min-h-svh w-full bg-slate-100 dark:bg-slate-950">
+        <GameSidebar
           settings={settings}
           onSettingsChange={handleSettingsChange}
         />
-        
-        <main className="flex-1 relative">
+
+        <main className="relative flex-1">
           <WordleGame key={gameKey} settings={settings} />
           <FloatingSidebarTrigger />
         </main>
