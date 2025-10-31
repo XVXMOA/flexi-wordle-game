@@ -118,75 +118,61 @@ const FALLBACK_WORDS: Record<Difficulty, Record<WordLength, string[]>> = {
   },
 };
 // Get a random word from fallback lists
-export const getRandomWord = async (
-  length: number,
-  difficulty: Difficulty,
-  category: WordCategory = 'normal'
-): Promise<string> => {
+export const getRandomWord = async (length: number, difficulty: 'easy' | 'medium' | 'hard'): Promise<string> => {
   try {
-    const targetLength = Math.min(Math.max(Math.round(length), 3), 8) as WordLength;
-    const pool = getWordPool(targetLength, difficulty, category);
-
-    if (pool.length === 0) {
-      return 'HOUSE';
+    // For now, use fallback words as the primary source
+    const words = FALLBACK_WORDS[difficulty][length as keyof typeof FALLBACK_WORDS[typeof difficulty]];
+    if (words && words.length > 0) {
+      return words[Math.floor(Math.random() * words.length)];
     }
 
-    const history = loadHistory();
-    const key = historyKeyFor(targetLength, difficulty, category);
-    const usedWords = new Set(history[key] ?? []);
-    let available = pool.filter(word => !usedWords.has(word));
-
-    if (available.length === 0) {
-      history[key] = [];
-      available = [...pool];
-    }
-
-    const word = available[Math.floor(Math.random() * available.length)];
-    const updated = [...(history[key] ?? []), word];
-    const maxHistory = Math.min(pool.length, HISTORY_LIMIT);
-    history[key] = updated.slice(-maxHistory);
-    saveHistory(history);
-
-    return word;
+    // Fallback to easy words if requested difficulty/length not available
+    const easyWords = FALLBACK_WORDS.easy[length as keyof typeof FALLBACK_WORDS.easy];
+    return easyWords[Math.floor(Math.random() * easyWords.length)];
   } catch (error) {
     console.error('Error getting random word:', error);
-    return 'HOUSE';
+    return 'HOUSE'; // Ultimate fallback
   }
 };
 
 // Validate if a word exists in the dictionary
 export const isValidWord = async (word: string): Promise<boolean> => {
   const upperWord = word.toUpperCase();
-
+  
+  // Check cache first
   if (wordCache.has(upperWord)) {
     return wordCache.get(upperWord)!;
   }
 
   try {
-    const allFallbackWords = new Set(
-      Object.values(FALLBACK_WORD_BANK)
-        .flatMap(category => Object.values(category))
-        .flatMap(words => normalizeWordList(words))
-    );
-
-    if (allFallbackWords.has(upperWord)) {
+    // First check if it's in our fallback word lists
+    const allFallbackWords = [
+      ...Object.values(FALLBACK_WORDS.easy).flat(),
+      ...Object.values(FALLBACK_WORDS.medium).flat(),
+      ...Object.values(FALLBACK_WORDS.hard).flat()
+    ];
+    
+    if (allFallbackWords.includes(upperWord)) {
       wordCache.set(upperWord, true);
       return true;
     }
 
+    // Try to validate with dictionary API
     const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word.toLowerCase()}`);
     const isValid = response.ok;
-
+    
+    // Cache the result
     wordCache.set(upperWord, isValid);
     return isValid;
   } catch (error) {
     console.error('Error validating word:', error);
-
-    const isReasonable = /^[A-Z]+$/.test(upperWord) &&
-      upperWord.length >= 3 &&
-      upperWord.length <= 8 &&
-      !/(.)\1{3,}/.test(upperWord);
-
+    
+    // For basic validation, check if it's a reasonable English word pattern
+    const isReasonable = /^[A-Z]+$/.test(upperWord) && 
+                        upperWord.length >= 3 && 
+                        upperWord.length <= 8 &&
+                        !/(.)\1{3,}/.test(upperWord); // No more than 3 consecutive same letters
+    
     wordCache.set(upperWord, isReasonable);
     return isReasonable;
   }
@@ -194,14 +180,12 @@ export const isValidWord = async (word: string): Promise<boolean> => {
 
 // Preload common words for better performance
 export const preloadCommonWords = async () => {
-  const commonWords = Array.from(
-    new Set(
-      Object.values(FALLBACK_WORD_BANK)
-        .flatMap(category => Object.values(category))
-        .flatMap(words => normalizeWordList(words))
-    )
-  ).slice(0, 200);
-
+  const commonWords = [
+    ...FALLBACK_WORDS.easy[5],
+    ...FALLBACK_WORDS.medium[5],
+    'HOUSE', 'MOUSE', 'PLANT', 'TRAIN', 'PLANE', 'CHAIR', 'TABLE', 'PHONE'
+  ];
+  
   commonWords.forEach(word => {
     wordCache.set(word, true);
   });
