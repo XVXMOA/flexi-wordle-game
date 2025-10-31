@@ -25,13 +25,13 @@ export const GameLayout = () => {
 
   return (
     <SidebarProvider>
-      <div className="min-h-screen flex w-full">
-        <GameSidebar 
+      <div className="relative z-10 flex min-h-svh w-full bg-slate-100 dark:bg-slate-950">
+        <GameSidebar
           settings={settings}
           onSettingsChange={handleSettingsChange}
         />
-        
-        <main className="flex-1 relative">
+
+        <main className="relative flex-1">
           <WordleGame key={gameKey} settings={settings} />
           <FloatingSidebarTrigger />
         </main>
