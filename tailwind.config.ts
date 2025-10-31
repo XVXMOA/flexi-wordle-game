@@ -109,6 +109,14 @@ export default {
             transform: "translate(-47%, -47%) scale(1.02)",
             opacity: "1",
             filter: "blur(1.5px) saturate(103%)",
+            transform: "translate(-35%, -35%) scale(0.88)",
+            opacity: "0",
+            filter: "blur(16px) saturate(120%)",
+          },
+          "60%": {
+            transform: "translate(-48%, -48%) scale(1.03)",
+            opacity: "1",
+            filter: "blur(2px) saturate(105%)",
           },
           "100%": {
             transform: "translate(-50%, -50%) scale(1)",
@@ -130,6 +138,13 @@ export default {
             transform: "translate(12%, 16%) scale(0.82)",
             opacity: "0",
             filter: "blur(12px) saturate(120%)",
+            transform: "translate(-42%, -42%) scale(0.96)",
+            filter: "blur(6px) saturate(110%)",
+          },
+          "100%": {
+            transform: "translate(14%, 18%) scale(0.78)",
+            opacity: "0",
+            filter: "blur(18px) saturate(130%)",
           },
         },
         "liquid-overlay-in": {
@@ -140,12 +155,14 @@ export default {
           "100%": {
             opacity: "1",
             backdropFilter: "blur(4px)",
+            backdropFilter: "blur(6px)",
           },
         },
         "liquid-overlay-out": {
           "0%": {
             opacity: "1",
             backdropFilter: "blur(4px)",
+            backdropFilter: "blur(6px)",
           },
           "100%": {
             opacity: "0",
