@@ -8,12 +8,14 @@ import { GameKeyboard } from './GameKeyboard';
 // import { TopNotification } from './TopNotification';
 import { useWordle } from '@/hooks/useWordle';
 import { cn } from '@/lib/utils';
+import type { WordCategory } from '@/lib/wordApi';
 
 interface WordleGameProps {
   settings: {
     wordLength: number;
     maxGuesses: number;
     difficulty: 'easy' | 'medium' | 'hard';
+    category: WordCategory;
   };
 }
 
@@ -314,6 +316,92 @@ export const WordleGame = ({ settings }: WordleGameProps) => {
           </DialogContent>
         </Dialog>
       </div>
+
+      <Dialog open={resultOpen} onOpenChange={handleResultDialogChange}>
+        <DialogContent className="liquid-panel sm:max-w-xl overflow-hidden rounded-[32px] p-0">
+          <div className="relative overflow-hidden">
+            <div className="pointer-events-none absolute -left-24 -top-28 h-48 w-48 rounded-full bg-gradient-to-br from-emerald-200/55 via-emerald-200/25 to-transparent opacity-70" />
+            <div className="pointer-events-none absolute -bottom-24 -right-16 h-56 w-56 rounded-full bg-gradient-to-br from-sky-200/60 via-sky-200/25 to-transparent opacity-70 animate-liquid-orb" />
+            <div className="pointer-events-none absolute inset-x-12 top-0 h-px bg-white/65" />
+            <div className="relative px-8 pb-10 pt-12">
+              <DialogHeader className="items-center space-y-4 text-center">
+                <DialogTitle className="text-3xl font-semibold tracking-tight text-slate-900">
+                  {gameState === 'won' ? 'You nailed the vibe' : 'Let the next one flow'}
+                </DialogTitle>
+                <p className="max-w-sm text-sm text-slate-500">
+                  {gameState === 'won'
+                    ? 'Every letter clicked into place. Take a second to enjoy the ripple before you dive back in.'
+                    : 'That one slipped away, but the next word is already warming up. Shake it off and slide again.'}
+                </p>
+
+                <div className="liquid-panel-soft mx-auto w-full max-w-sm px-6 py-6 text-center text-slate-600">
+                  <span className="text-xs font-semibold uppercase tracking-[0.45em] text-slate-500">Word</span>
+                  <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
+                    {completedWord.split('').map((letter, index) => (
+                      <span
+                        key={`${letter}-${index}`}
+                        className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/55 bg-white/70 text-2xl font-semibold tracking-[0.2em] text-slate-900"
+                      >
+                        {letter}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </DialogHeader>
+
+              <div className="mt-8 grid gap-5">
+                <div className="grid grid-cols-2 gap-4 text-center md:grid-cols-4">
+                  {statHighlights.map(({ label, value }) => (
+                    <div key={label} className="liquid-panel-soft flex flex-col gap-1 px-4 py-4 text-slate-600">
+                      <div className="text-xs font-medium uppercase tracking-[0.3em] text-slate-500">{label}</div>
+                      <div className="text-2xl font-semibold text-slate-900">{value}</div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="liquid-panel-soft px-6 py-6">
+                  <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.32em] text-slate-500">
+                    <span>Guess rhythm</span>
+                    <span>Max {localSettings.maxGuesses}</span>
+                  </div>
+                  <div className="mt-4 space-y-2">
+                    {Array.from({ length: localSettings.maxGuesses }, (_, i) => {
+                      const guessNum = i + 1;
+                      const count = stats.guessDistribution?.[guessNum] || 0;
+                      const maxCount = Math.max(...Object.values(stats.guessDistribution || {}), 1);
+                      const barWidth = maxCount > 0 ? (count / maxCount) * 100 : 0;
+
+                      return (
+                        <div key={guessNum} className="flex items-center gap-3">
+                          <span className="w-6 text-xs font-medium text-slate-500">{guessNum}</span>
+                          <div className="relative flex-1 h-2.5 overflow-hidden rounded-full bg-white/55">
+                            <div
+                              className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-emerald-400 via-sky-400 to-indigo-500 transition-[width] duration-500"
+                              style={{ width: `${barWidth}%` }}
+                            />
+                          </div>
+                          <span className="w-6 text-xs font-medium text-slate-500 text-right">{count}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <DialogFooter className="mt-0 w-full items-center justify-center px-8 pb-8">
+            <Button
+              onClick={handleNextWord}
+              className="group w-full max-w-sm justify-center rounded-full bg-slate-900/95 px-6 py-5 text-base font-semibold text-white shadow-[0_18px_40px_-26px_rgba(15,23,42,0.85)] transition-transform hover:scale-[1.01]"
+            >
+              <span className="flex items-center gap-2">
+                Next word
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </span>
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

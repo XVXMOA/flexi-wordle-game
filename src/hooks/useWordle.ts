@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { getRandomWord, isValidWord } from '@/lib/wordApi';
+import { getRandomWord, isValidWord, type WordCategory } from '@/lib/wordApi';
 import { useToast } from '@/hooks/use-toast';
 
 interface Tile {
@@ -19,6 +19,7 @@ interface GameSettings {
   wordLength: number;
   maxGuesses: number;
   difficulty: 'easy' | 'medium' | 'hard';
+  category: WordCategory;
 }
 
 type GameState = 'playing' | 'won' | 'lost';
@@ -45,7 +46,7 @@ export const useWordle = (settings: GameSettings) => {
   const initializeGame = useCallback(async () => {
     setIsLoading(true);
     try {
-      const word = await getRandomWord(settings.wordLength, settings.difficulty);
+      const word = await getRandomWord(settings.wordLength, settings.difficulty, settings.category);
       setTargetWord(word.toUpperCase());
       setCurrentGuess('');
       setCurrentRow(0);
@@ -66,7 +67,7 @@ export const useWordle = (settings: GameSettings) => {
         6: ['CASTLE', 'FRIEND', 'NATURE'],
         7: ['RAINBOW', 'JOURNEY', 'FLOWERS'],
         8: ['MOUNTAIN', 'SUNSHINE', 'COMPUTER']
-      };
+      } as const;
       const fallbacks = fallbackWords[settings.wordLength as keyof typeof fallbackWords] || fallbackWords[5];
       setTargetWord(fallbacks[Math.floor(Math.random() * fallbacks.length)]);
     } finally {
