@@ -104,7 +104,7 @@ const FALLBACK_WORDS: Record<Difficulty, Record<WordLength, string[]>> = {
     ],
     6: [
       'SPHINX', 'JINXED', 'MUZZLE', 'PYTHON', 'ZEALOT', 'CRYPTS', 'RHYMES', 'QUARTZ', 'ZYGOTE',
-      'PHLEGM', 'VORTEX', 'SQUIRM', 'OXYGEN', 'MYXOID', 'SCYTHE', 'THWACK', 'UNFURL', 'WIZARD'
+      'PHLEGM', 'VORTEX', 'SQUIRM', 'OXYGEN', 'MYXOID', 'SCYTHE', 'THWACK', 'UNFURL', 'WIZARD' , 'REDWAN'
     ],
     7: [
       'PHOENIX', 'ZEPHYRS', 'BUZZCUT', 'JAZZMAN', 'OXIDIZE', 'QUARTZY', 'RHIZOME', 'PSYCHED',
