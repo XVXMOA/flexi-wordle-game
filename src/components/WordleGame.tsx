@@ -130,7 +130,7 @@ export const WordleGame = ({ settings }: WordleGameProps) => {
               <p className="text-sm uppercase tracking-[0.35em] text-slate-400">Daily Play</p>
               <h1 className="mt-1 text-3xl font-semibold text-slate-900">Saleh's Wordle</h1>
               <p className="text-sm text-slate-500 max-w-md">
-                Guess the hidden word with calm focus. Keep your streak alive and celebrate the little wins.
+                Guess the hidden word with calm focus. Keep your streak alive and celebrate the little wins.(Names Are In Hard Mode).
               </p>
             </div>
             <div className="flex items-center gap-2">
