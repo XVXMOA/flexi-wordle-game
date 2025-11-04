@@ -100,7 +100,7 @@ const FALLBACK_WORDS: Record<Difficulty, Record<WordLength, string[]>> = {
     ],
     5: [
       'FJORD', 'LYMPH', 'PSALM', 'PHLOX', 'CRAZE', 'QUARK', 'QUIPU', 'WALTZ', 'ZIPPY', 'GIZMO',
-      'JUMPS', 'KRILL', 'MYRRH', 'SPAZZ', 'XENON', 'ZAPPY', 'NINJA', 'VYING', 'PYGMY', 'BLAZE'
+      'JUMPS', 'KRILL', 'MYRRH', 'SPAZZ', 'XENON', 'ZAPPY', 'NINJA', 'VYING', 'PYGMY', 'BLAZE','TAMIM'
     ],
     6: [
       'SPHINX', 'JINXED', 'MUZZLE', 'PYTHON', 'ZEALOT', 'CRYPTS', 'RHYMES', 'QUARTZ', 'ZYGOTE',
