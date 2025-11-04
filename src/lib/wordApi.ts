@@ -96,19 +96,19 @@ const FALLBACK_WORDS: Record<Difficulty, Record<WordLength, string[]>> = {
     ],
     4: [
       'ONYX', 'QUIZ', 'JAZZ', 'CZAR', 'MYTH', 'QOPH', 'JINX', 'ZARF', 'WHIZ', 'HYMN', 'TZAR',
-      'SMEW', 'PHIZ', 'QADI', 'BUZZ', 'JOWL', 'ORYX', 'MUON', 'LYNX', 'ZEST'
+      'SMEW', 'PHIZ', 'QADI', 'BUZZ', 'JOWL', 'ORYX', 'MUON', 'LYNX', 'ZEST','AMIR','MUSA'
     ],
     5: [
       'FJORD', 'LYMPH', 'PSALM', 'PHLOX', 'CRAZE', 'QUARK', 'QUIPU', 'WALTZ', 'ZIPPY', 'GIZMO',
-      'JUMPS', 'KRILL', 'MYRRH', 'SPAZZ', 'XENON', 'ZAPPY', 'NINJA', 'VYING', 'PYGMY', 'BLAZE','TAMIM'
+      'JUMPS', 'KRILL', 'MYRRH', 'SPAZZ', 'XENON', 'ZAPPY', 'NINJA', 'VYING', 'PYGMY', 'BLAZE','RIYAD' ,'BILAL', 'AYAAN'
     ],
     6: [
       'SPHINX', 'JINXED', 'MUZZLE', 'PYTHON', 'ZEALOT', 'CRYPTS', 'RHYMES', 'QUARTZ', 'ZYGOTE',
-      'PHLEGM', 'VORTEX', 'SQUIRM', 'OXYGEN', 'MYXOID', 'SCYTHE', 'THWACK', 'UNFURL', 'WIZARD' , 'REDWAN'
+      'PHLEGM', 'VORTEX', 'SQUIRM', 'OXYGEN', 'MYXOID', 'SCYTHE', 'THWACK', 'UNFURL', 'WIZARD' , 'REDWAN', 'SHAQIB'
     ],
     7: [
       'PHOENIX', 'ZEPHYRS', 'BUZZCUT', 'JAZZMAN', 'OXIDIZE', 'QUARTZY', 'RHIZOME', 'PSYCHED',
-      'SPHERIC', 'MYXOMAS', 'CRYPTIC', 'ZOMBIFY', 'SUBTEXT', 'VECTORS', 'WHIZZED'
+      'SPHERIC', 'MYXOMAS', 'CRYPTIC', 'ZOMBIFY', 'SUBTEXT', 'VECTORS', 'WHIZZED','ETHNIEL'
     ],
     8: [
       'QUIZZIFY', 'ZEPHYRUS', 'JAZZIEST', 'MYTHICAL', 'SPHINXES', 'CRYPTICS', 'OXIDIZER',
