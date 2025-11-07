@@ -1,4 +1,4 @@
-p// Word API utilities for fetching and validating words
+// Word API utilities for fetching and validating words
 
 interface WordApiResponse {
   word: string;
