@@ -70,7 +70,7 @@ const FALLBACK_WORDS: Record<Difficulty, Record<WordLength, string[]>> = {
     5: [
       'SUSSY', 'YEETS', 'GYATT', 'ONGOD', 'VIBES', 'HYPED', 'SLAPS', 'BASED', 'CLOWN', 'SWIPE',
       'TREND', 'SNEAK', 'RAVER', 'GHOST', 'VIRAL', 'BOOST', 'EMOTE', 'LIKED', 'SPAMS', 'SHARE',
-      'STANS', 'REACT', 'REELS', 'SHORT', 'SWOON', 'GRIND', 'SCENE', 'SQUAD', 'FROTH', 'BLING'
+      'STANS', 'REACT', 'REELS', 'SHORT', 'SWOON', 'GRIND', 'SCENE', 'SQUAD', 'FROTH', 'BLING','SANIS'
     ],
     6: [
       'SHEESH', 'LOWKEY', 'CRINGE', 'GOATED', 'RIZZED', 'SLAYED', 'HYPERS', 'VIBING', 'REPOST',
@@ -100,7 +100,7 @@ const FALLBACK_WORDS: Record<Difficulty, Record<WordLength, string[]>> = {
     ],
     5: [
       'FJORD', 'LYMPH', 'PSALM', 'PHLOX', 'CRAZE', 'QUARK', 'QUIPU', 'WALTZ', 'ZIPPY', 'GIZMO',
-      'JUMPS', 'KRILL', 'MYRRH', 'SPAZZ', 'XENON', 'ZAPPY', 'NINJA', 'VYING', 'PYGMY', 'BLAZE','RIYAD' ,'BILAL', 'AYAAN'
+      'JUMPS', 'KRILL', 'MYRRH', 'SPAZZ', 'XENON', 'ZAPPY', 'NINJA', 'VYING', 'PYGMY', 'BLAZE','RIYAD' ,'BILAL', 'AYAAN','SALEH',
     ],
     6: [
       'SPHINX', 'JINXED', 'MUZZLE', 'PYTHON', 'ZEALOT', 'CRYPTS', 'RHYMES', 'QUARTZ', 'ZYGOTE',
