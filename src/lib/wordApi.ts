@@ -35,7 +35,7 @@ const FALLBACK_WORDS: Record<Difficulty, Record<WordLength, string[]>> = {
       'DREAM', 'BRAVE', 'GREEN', 'LAUGH', 'SWEET', 'RIVER', 'SHINE', 'STORY', 'PLANT', 'HOUSE',
       'CHAIR', 'GRACE', 'MERRY', 'SPARK', 'HELLO', 'SLEEP', 'LEMON', 'TASTE', 'FAITH',
       'FRIEND', 'MAGIC', 'QUIET', 'TABLE', 'BERRY', 'WATER', 'SMOOTH', 'ANGEL', 'COAST',
-      'BLISS', 'SALEH'
+      'BLISS', 'SALEH','ANDER'
     ],
     6: [
       'BUTTER', 'CANDLE', 'GARDEN', 'WONDER', 'PEBBLE', 'SUMMER', 'BRIGHT', 'SNUGLY', 'MELLOW',
