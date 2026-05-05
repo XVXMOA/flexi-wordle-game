@@ -113,7 +113,7 @@ const FALLBACK_WORDS: Record<Difficulty, Record<WordLength, string[]>> = {
     8: [
       'QUIZZIFY', 'ZEPHYRUS', 'JAZZIEST', 'MYTHICAL', 'SPHINXES', 'CRYPTICS', 'OXIDIZER',
       'QUANTIZE', 'RHIZOPOD', 'BUZZWORD', 'JAWBREAK', 'VORTEXES', 'PSYCHICS', 'SQUEEZED',
-      'TWIZZLED'
+      'TWIZZLED', 'AUTISTIC'
     ],
   },
 };
