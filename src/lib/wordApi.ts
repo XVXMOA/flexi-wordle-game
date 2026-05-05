@@ -28,7 +28,7 @@ const FALLBACK_WORDS: Record<Difficulty, Record<WordLength, string[]>> = {
     4: [
       'WARM', 'SOFT', 'GLOW', 'KIND', 'PLAY', 'SNUG', 'EASY', 'SAFE', 'FINE', 'COZY', 'CHAT',
       'TIME', 'SING', 'TREE', 'RAIN', 'WIND', 'LUSH', 'MINT', 'FOAM', 'HOPE', 'BELL', 'BOOM',
-      'MILD', 'LATE', 'PEAR', 'LAKE', 'SAND', 'STAR', 'GOOD', 'NEST'
+      'MILD', 'LATE', 'PEAR', 'LAKE', 'SAND', 'STAR', 'GOOD', 'NEST', 'MUSA'
     ],
     5: [
       'APPLE', 'SMILE', 'LIGHT', 'HAPPY', 'BLOOM', 'PEACE', 'NIGHT', 'CLOUD', 'BREAD', 'MUSIC',
